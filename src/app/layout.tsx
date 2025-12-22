@@ -7,7 +7,7 @@ import "./globals.css";
 import "../lib/fonts";
 import { Navbar } from "@/components/custom/navbar";
 import { Footer } from "@/components/custom/footer";
-import { LanguageProvider } from "@/contexts/language-context";
+import { LanguageProvider } from "@/lib/i18n/i18n-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

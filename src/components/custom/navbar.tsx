@@ -4,7 +4,7 @@ import Link from "next/link"
 import { Menu, X, Sparkles, Globe } from "lucide-react"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { useLanguage } from "@/contexts/language-context"
+import { useLanguage } from "@/lib/i18n/i18n-context"
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
