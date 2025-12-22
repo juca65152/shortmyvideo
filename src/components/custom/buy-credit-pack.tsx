@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { useI18n } from "@/lib/i18n/i18n-context"
+import { useLanguage } from "@/lib/i18n/i18n-context"
 import { 
   calculateCreditPrice, 
   formatPrice, 
@@ -27,7 +27,7 @@ export function BuyCreditPack({
   currentCurrency = "BRL",
   onPurchaseClick 
 }: BuyCreditPackProps) {
-  const { t, language } = useI18n()
+  const { language } = useLanguage()
   const locale = language
   const [credits, setCredits] = useState<number>(500)
   const [currency, setCurrency] = useState<StripeCurrency>(currentCurrency)
