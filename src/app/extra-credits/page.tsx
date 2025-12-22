@@ -8,7 +8,7 @@ import { Card } from "@/components/ui/card"
 import { CheckCircle2, Zap, Shield, Clock } from "lucide-react"
 
 export default function ExtraCreditsPage() {
-  const { t, locale } = useLanguage()
+  const { language } = useLanguage()
   
   // Mock user data - replace with actual user data
   const [userCredits] = useState({
@@ -30,22 +30,22 @@ export default function ExtraCreditsPage() {
   const benefits = [
     {
       icon: Clock,
-      title: locale === "pt" ? "Nunca Expiram" : "Never Expire",
-      description: locale === "pt" 
+      title: language === "pt" ? "Nunca Expiram" : "Never Expire",
+      description: language === "pt" 
         ? "Créditos extras permanecem na sua conta indefinidamente"
         : "Extra credits remain in your account indefinitely"
     },
     {
       icon: Zap,
-      title: locale === "pt" ? "Prioridade no Uso" : "Priority Usage",
-      description: locale === "pt"
+      title: language === "pt" ? "Prioridade no Uso" : "Priority Usage",
+      description: language === "pt"
         ? "Consumidos antes dos créditos mensais do plano"
         : "Consumed before monthly plan credits"
     },
     {
       icon: Shield,
-      title: locale === "pt" ? "Pagamento Seguro" : "Secure Payment",
-      description: locale === "pt"
+      title: language === "pt" ? "Pagamento Seguro" : "Secure Payment",
+      description: language === "pt"
         ? "Processado com segurança via Stripe"
         : "Securely processed via Stripe"
     }
@@ -57,10 +57,10 @@ export default function ExtraCreditsPage() {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-[#0066FF] to-[#FF0080] bg-clip-text text-transparent">
-            {locale === "pt" ? "Créditos Extras" : "Extra Credits"}
+            {language === "pt" ? "Créditos Extras" : "Extra Credits"}
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            {locale === "pt"
+            {language === "pt"
               ? "Compre créditos adicionais quando precisar. Eles nunca expiram e são consumidos antes dos seus créditos mensais."
               : "Purchase additional credits when you need them. They never expire and are consumed before your monthly credits."}
           </p>
@@ -75,13 +75,13 @@ export default function ExtraCreditsPage() {
               extraCredits={userCredits.extra}
               maxMonthlyCredits={userCredits.maxMonthly}
               showUpgrade={false}
-              locale={locale}
+              locale={language}
             />
             
             {/* Benefits */}
             <div className="space-y-4">
               <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                {locale === "pt" ? "Por que comprar créditos extras?" : "Why buy extra credits?"}
+                {language === "pt" ? "Por que comprar créditos extras?" : "Why buy extra credits?"}
               </h3>
               {benefits.map((benefit, index) => (
                 <Card key={index} className="p-4">
@@ -116,7 +116,7 @@ export default function ExtraCreditsPage() {
         {/* FAQ Section */}
         <Card className="p-8">
           <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100">
-            {locale === "pt" ? "Perguntas Frequentes" : "Frequently Asked Questions"}
+            {language === "pt" ? "Perguntas Frequentes" : "Frequently Asked Questions"}
           </h3>
           
           <div className="space-y-6">
@@ -124,13 +124,13 @@ export default function ExtraCreditsPage() {
               <div className="flex items-start gap-2 mb-2">
                 <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
                 <h4 className="font-semibold text-gray-900 dark:text-gray-100">
-                  {locale === "pt" 
+                  {language === "pt" 
                     ? "Os créditos extras expiram?" 
                     : "Do extra credits expire?"}
                 </h4>
               </div>
               <p className="text-gray-600 dark:text-gray-400 ml-7">
-                {locale === "pt"
+                {language === "pt"
                   ? "Não! Créditos extras nunca expiram e permanecem na sua conta indefinidamente."
                   : "No! Extra credits never expire and remain in your account indefinitely."}
               </p>
@@ -140,13 +140,13 @@ export default function ExtraCreditsPage() {
               <div className="flex items-start gap-2 mb-2">
                 <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
                 <h4 className="font-semibold text-gray-900 dark:text-gray-100">
-                  {locale === "pt"
+                  {language === "pt"
                     ? "Qual a ordem de consumo dos créditos?"
                     : "What is the credit consumption order?"}
                 </h4>
               </div>
               <p className="text-gray-600 dark:text-gray-400 ml-7">
-                {locale === "pt"
+                {language === "pt"
                   ? "Créditos extras são sempre consumidos primeiro, antes dos créditos mensais do seu plano."
                   : "Extra credits are always consumed first, before your monthly plan credits."}
               </p>
@@ -156,13 +156,13 @@ export default function ExtraCreditsPage() {
               <div className="flex items-start gap-2 mb-2">
                 <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
                 <h4 className="font-semibold text-gray-900 dark:text-gray-100">
-                  {locale === "pt"
+                  {language === "pt"
                     ? "Posso comprar créditos extras sem assinatura?"
                     : "Can I buy extra credits without a subscription?"}
                 </h4>
               </div>
               <p className="text-gray-600 dark:text-gray-400 ml-7">
-                {locale === "pt"
+                {language === "pt"
                   ? "Créditos extras estão disponíveis apenas para usuários com planos pagos ativos (Pro, Creator+ ou Creator Pro)."
                   : "Extra credits are available only for users with active paid plans (Pro, Creator+, or Creator Pro)."}
               </p>
@@ -172,13 +172,13 @@ export default function ExtraCreditsPage() {
               <div className="flex items-start gap-2 mb-2">
                 <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
                 <h4 className="font-semibold text-gray-900 dark:text-gray-100">
-                  {locale === "pt"
+                  {language === "pt"
                     ? "Como funciona o pagamento?"
                     : "How does payment work?"}
                 </h4>
               </div>
               <p className="text-gray-600 dark:text-gray-400 ml-7">
-                {locale === "pt"
+                {language === "pt"
                   ? "Pagamentos são processados de forma segura via Stripe. É uma compra única (não recorrente) e os créditos são adicionados imediatamente após a confirmação do pagamento."
                   : "Payments are securely processed via Stripe. It's a one-time purchase (not recurring) and credits are added immediately after payment confirmation."}
               </p>

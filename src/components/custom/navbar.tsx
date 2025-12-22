@@ -1,12 +1,33 @@
 "use client"
 
 import Link from "next/link"
-import { Menu, X, Sparkles } from "lucide-react"
+import { Menu, X, Sparkles, Globe } from "lucide-react"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
+import { useLanguage } from "@/contexts/language-context"
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { language, setLanguage } = useLanguage()
+
+  const translations = {
+    pt: {
+      features: "Recursos",
+      pricing: "Preços",
+      howItWorks: "Como Funciona",
+      signIn: "Entrar",
+      startFree: "Começar Grátis"
+    },
+    en: {
+      features: "Features",
+      pricing: "Pricing",
+      howItWorks: "How it Works",
+      signIn: "Sign In",
+      startFree: "Start Free"
+    }
+  }
+
+  const t = translations[language]
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-lg border-b border-gray-200">
@@ -25,19 +46,32 @@ export function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             <Link href="#features" className="text-gray-700 hover:text-[#0066FF] transition-colors font-medium">
-              Features
+              {t.features}
             </Link>
             <Link href="/pricing" className="text-gray-700 hover:text-[#0066FF] transition-colors font-medium">
-              Pricing
+              {t.pricing}
             </Link>
             <Link href="#how-it-works" className="text-gray-700 hover:text-[#0066FF] transition-colors font-medium">
-              How it Works
+              {t.howItWorks}
             </Link>
+            
+            {/* Language Selector */}
+            <button
+              onClick={() => setLanguage(language === 'pt' ? 'en' : 'pt')}
+              className="flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-300 hover:border-[#0066FF] hover:bg-gray-50 transition-all group"
+              title={language === 'pt' ? 'Switch to English' : 'Mudar para Português'}
+            >
+              <Globe className="w-4 h-4 text-gray-600 group-hover:text-[#0066FF] transition-colors" />
+              <span className="text-sm font-medium text-gray-700 group-hover:text-[#0066FF] transition-colors uppercase">
+                {language}
+              </span>
+            </button>
+
             <Button variant="outline" className="border-[#0066FF] text-[#0066FF] hover:bg-[#0066FF] hover:text-white">
-              Sign In
+              {t.signIn}
             </Button>
             <Button className="bg-gradient-to-r from-[#0066FF] to-[#FF0080] hover:opacity-90 text-white shadow-lg shadow-[#FF0080]/30">
-              Start Free
+              {t.startFree}
             </Button>
           </div>
 
@@ -64,28 +98,40 @@ export function Navbar() {
               className="block text-gray-700 hover:text-[#0066FF] transition-colors font-medium py-2"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Features
+              {t.features}
             </Link>
             <Link
               href="/pricing"
               className="block text-gray-700 hover:text-[#0066FF] transition-colors font-medium py-2"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Pricing
+              {t.pricing}
             </Link>
             <Link
               href="#how-it-works"
               className="block text-gray-700 hover:text-[#0066FF] transition-colors font-medium py-2"
               onClick={() => setMobileMenuOpen(false)}
             >
-              How it Works
+              {t.howItWorks}
             </Link>
+            
+            {/* Mobile Language Selector */}
+            <button
+              onClick={() => setLanguage(language === 'pt' ? 'en' : 'pt')}
+              className="flex items-center gap-2 w-full px-3 py-2 rounded-lg border border-gray-300 hover:border-[#0066FF] hover:bg-gray-50 transition-all"
+            >
+              <Globe className="w-4 h-4 text-gray-600" />
+              <span className="text-sm font-medium text-gray-700">
+                {language === 'pt' ? 'English' : 'Português'}
+              </span>
+            </button>
+
             <div className="pt-4 space-y-3">
               <Button variant="outline" className="w-full border-[#0066FF] text-[#0066FF]">
-                Sign In
+                {t.signIn}
               </Button>
               <Button className="w-full bg-gradient-to-r from-[#0066FF] to-[#FF0080] text-white">
-                Start Free
+                {t.startFree}
               </Button>
             </div>
           </div>
