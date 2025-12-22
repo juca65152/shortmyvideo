@@ -7,7 +7,6 @@ import "./globals.css";
 import "../lib/fonts";
 import { Navbar } from "@/components/custom/navbar";
 import { Footer } from "@/components/custom/footer";
-import { LanguageProvider } from "@/lib/i18n/i18n-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,11 +36,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <LanguageProvider>
-          <Navbar />
-          {children}
-          <Footer />
-        </LanguageProvider>
+        <Navbar />
+        {children}
+        <Footer />
       </body>
     </html>
   );

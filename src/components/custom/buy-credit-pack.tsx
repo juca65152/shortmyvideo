@@ -1,14 +1,13 @@
 "use client"
 
 import { useState } from "react"
-import { useLanguage } from "@/lib/i18n/i18n-context"
-import { 
-  calculateCreditPrice, 
-  formatPrice, 
+import {
+  calculateCreditPrice,
+  formatPrice,
   getUnitPriceText,
   validateCreditPurchase,
   getSuggestedAmounts,
-  type StripeCurrency 
+  type StripeCurrency
 } from "@/lib/stripe"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -22,25 +21,24 @@ interface BuyCreditPackProps {
   onPurchaseClick?: (credits: number, currency: StripeCurrency) => void
 }
 
-export function BuyCreditPack({ 
-  userId, 
+export function BuyCreditPack({
+  userId,
   currentCurrency = "BRL",
-  onPurchaseClick 
+  onPurchaseClick
 }: BuyCreditPackProps) {
-  const { language } = useLanguage()
-  const locale = language
+  const locale = 'en'
   const [credits, setCredits] = useState<number>(500)
   const [currency, setCurrency] = useState<StripeCurrency>(currentCurrency)
   const [error, setError] = useState<string>("")
-  
+
   const suggestedAmounts = getSuggestedAmounts()
   const totalPrice = calculateCreditPrice(credits, currency)
   const unitPriceText = getUnitPriceText(currency, locale)
-  
+
   const handleCreditsChange = (value: string) => {
     const numValue = parseInt(value) || 0
     setCredits(numValue)
-    
+
     const validation = validateCreditPurchase(numValue, currency)
     if (!validation.valid) {
       setError(validation.error || "")
@@ -48,15 +46,15 @@ export function BuyCreditPack({
       setError("")
     }
   }
-  
+
   const handlePurchase = () => {
     const validation = validateCreditPurchase(credits, currency)
-    
+
     if (!validation.valid) {
       setError(validation.error || "Invalid purchase")
       return
     }
-    
+
     // Call parent handler or redirect to Stripe checkout
     if (onPurchaseClick) {
       onPurchaseClick(credits, currency)
@@ -65,7 +63,7 @@ export function BuyCreditPack({
       console.log("Purchase:", { credits, currency, totalPrice, userId })
     }
   }
-  
+
   return (
     <Card className="p-6 space-y-6">
       {/* Header */}
@@ -73,18 +71,18 @@ export function BuyCreditPack({
         <div className="flex items-center gap-2">
           <Zap className="w-5 h-5 text-orange-500" />
           <h3 className="text-xl font-semibold">
-            {locale === "pt" ? "Comprar Créditos Extras" : "Buy Extra Credits"}
+            Buy Extra Credits
           </h3>
         </div>
         <p className="text-sm text-gray-600 dark:text-gray-400">
           {unitPriceText}
         </p>
       </div>
-      
+
       {/* Currency Selector */}
       <div className="space-y-2">
         <Label>
-          {locale === "pt" ? "Moeda" : "Currency"}
+          Currency
         </Label>
         <div className="flex gap-2">
           <Button
@@ -103,11 +101,11 @@ export function BuyCreditPack({
           </Button>
         </div>
       </div>
-      
+
       {/* Quick Select Buttons */}
       <div className="space-y-2">
         <Label>
-          {locale === "pt" ? "Quantidade Rápida" : "Quick Select"}
+          Quick Select
         </Label>
         <div className="grid grid-cols-3 gap-2">
           {suggestedAmounts.map((amount) => (
@@ -125,11 +123,11 @@ export function BuyCreditPack({
           ))}
         </div>
       </div>
-      
+
       {/* Custom Amount Input */}
       <div className="space-y-2">
         <Label htmlFor="credits">
-          {locale === "pt" ? "Quantidade Personalizada" : "Custom Amount"}
+          Custom Amount
         </Label>
         <Input
           id="credits"
@@ -138,7 +136,7 @@ export function BuyCreditPack({
           max="100000"
           value={credits}
           onChange={(e) => handleCreditsChange(e.target.value)}
-          placeholder={locale === "pt" ? "Digite a quantidade" : "Enter amount"}
+          placeholder="Enter amount"
         />
         {error && (
           <div className="flex items-center gap-2 text-sm text-red-500">
@@ -147,18 +145,18 @@ export function BuyCreditPack({
           </div>
         )}
       </div>
-      
+
       {/* Price Summary */}
       <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg space-y-2">
         <div className="flex justify-between text-sm">
           <span className="text-gray-600 dark:text-gray-400">
-            {locale === "pt" ? "Créditos" : "Credits"}:
+            Credits:
           </span>
           <span className="font-medium">{credits.toLocaleString()}</span>
         </div>
         <div className="flex justify-between text-sm">
           <span className="text-gray-600 dark:text-gray-400">
-            {locale === "pt" ? "Preço unitário" : "Unit price"}:
+            Unit price:
           </span>
           <span className="font-medium">
             {formatPrice(
@@ -170,7 +168,7 @@ export function BuyCreditPack({
         <div className="pt-2 border-t border-gray-200 dark:border-gray-700">
           <div className="flex justify-between">
             <span className="font-semibold">
-              {locale === "pt" ? "Total" : "Total"}:
+              Total:
             </span>
             <span className="text-xl font-bold text-orange-500">
               {formatPrice(totalPrice, currency)}
@@ -178,7 +176,7 @@ export function BuyCreditPack({
           </div>
         </div>
       </div>
-      
+
       {/* Purchase Button */}
       <Button
         onClick={handlePurchase}
@@ -187,14 +185,12 @@ export function BuyCreditPack({
         size="lg"
       >
         <CreditCard className="w-4 h-4 mr-2" />
-        {locale === "pt" ? "Comprar Agora" : "Buy Now"}
+        Buy Now
       </Button>
-      
+
       {/* Info Text */}
       <p className="text-xs text-center text-gray-500 dark:text-gray-400">
-        {locale === "pt" 
-          ? "Créditos extras nunca expiram e são consumidos antes dos créditos mensais."
-          : "Extra credits never expire and are consumed before monthly credits."}
+        Extra credits never expire and are consumed before monthly credits.
       </p>
     </Card>
   )
