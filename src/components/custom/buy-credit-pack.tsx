@@ -10,22 +10,42 @@
     setError("")
 
     try {
-      // Track purchase attempt
-      analytics.trackEvent({
-        name: 'purchase_attempt',
-        properties: { credits, currency, totalPrice }
-      })
+  analytics.trackEvent({
+    name: 'purchase_attempt',
+    properties: { credits, currency, totalPrice }
+  })
 
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 2000))
+  const res = await fetch('/api/stripe/checkout', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      credits,
+      currency
+    })
+  })
 
-      // Call parent handler or redirect to Stripe checkout
-      if (onPurchaseClick) {
-        onPurchaseClick(credits, currency)
-      } else {
-        // TODO: Implement Stripe checkout redirect
-        console.log("Purchase:", { credits, currency, totalPrice, userId })
-      }
+  if (!res.ok) {
+    throw new Error('Failed to create checkout session')
+  }
+
+  const data = await res.json()
+
+  if (!data.url) {
+    throw new Error('Stripe checkout URL not returned')
+  }
+
+  window.location.href = data.url
+} catch (err) {
+  setError("Purchase failed. Please try again.")
+  console.error("Purchase error:", err)
+  analytics.trackError(err as Error, {
+    context: 'handlePurchase',
+    credits,
+    currency
+  })
+} finally {
+  setIsLoading(false)
+}
     } catch (err) {
       setError("Purchase failed. Please try again.")
       console.error("Purchase error:", err)
