@@ -2,11 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { validateEnv } from '@/lib/env'
 
-// Initialize Stripe with live secret key
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2024-12-18.acacia',
-})
-
 // Credit packages configuration
 const CREDIT_PACKAGES = {
   '100': { credits: 100, price: 499, currency: 'usd' }, // $4.99
@@ -19,6 +14,20 @@ export async function POST(request: NextRequest) {
   try {
     // Validate environment variables
     validateEnv()
+
+    // Validate Stripe secret key before initializing
+    if (!process.env.STRIPE_SECRET_KEY) {
+      console.error('STRIPE_SECRET_KEY is not defined')
+      return NextResponse.json(
+        { error: 'Stripe configuration error' },
+        { status: 500 }
+      )
+    }
+
+    // Initialize Stripe only after validation
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+      apiVersion: '2024-12-18.acacia',
+    })
 
     const body = await request.json()
     const { credits, userId, userEmail } = body
