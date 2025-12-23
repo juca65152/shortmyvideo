@@ -17,7 +17,7 @@ export default function NotFound() {
             The page you're looking for doesn't exist or has been moved.
           </p>
         </div>
-        
+
         <div className="space-y-4">
           <Link href="/">
             <Button className="w-full bg-gradient-to-r from-[#0066FF] to-[#FF0080] hover:opacity-90 text-white">
@@ -25,15 +25,13 @@ export default function NotFound() {
               Go Home
             </Button>
           </Link>
-          
-          <Button 
-            variant="outline" 
-            onClick={() => window.history.back()}
-            className="w-full"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Go Back
-          </Button>
+
+          <Link href="/">
+            <Button variant="outline" className="w-full">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Go Back
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
