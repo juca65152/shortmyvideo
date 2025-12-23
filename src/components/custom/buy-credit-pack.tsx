@@ -40,6 +40,6 @@ catch (err) {
     credits,
     currency
   })
-} finally {
+finally {
   setIsLoading(false)
 }
