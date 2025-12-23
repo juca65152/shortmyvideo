@@ -32,7 +32,7 @@ try {
   }
 
   window.location.href = data.url
-} catch (err) {
+catch (err) {
   setError("Purchase failed. Please try again.")
   console.error("Purchase error:", err)
   analytics.trackError(err as Error, {
