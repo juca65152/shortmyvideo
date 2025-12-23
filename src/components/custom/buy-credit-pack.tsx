@@ -43,4 +43,3 @@ try {
 } finally {
   setIsLoading(false)
 }
-
