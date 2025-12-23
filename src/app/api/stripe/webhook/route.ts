@@ -2,20 +2,31 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { headers } from 'next/headers'
 import { validateEnv } from '@/lib/env'
-import { supabase } from '@/lib/supabase'
-
-// Initialize Stripe with live secret key
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2024-12-18.acacia',
-})
-
-// Stripe webhook secret for live mode
-const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!
+import { createClient } from '@supabase/supabase-js'
 
 export async function POST(request: NextRequest) {
   try {
     // Validate environment variables
     validateEnv()
+
+    // Initialize Stripe client
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+      apiVersion: '2024-12-18.acacia',
+    })
+
+    // Stripe webhook secret for live mode
+    const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!
+
+    // Validate Supabase environment variables
+    if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      return NextResponse.json({ error: 'Missing Supabase configuration' }, { status: 500 })
+    }
+
+    // Initialize Supabase client
+    const supabase = createClient(
+      process.env.SUPABASE_URL,
+      process.env.SUPABASE_SERVICE_ROLE_KEY
+    )
 
     const body = await request.text()
     const sig = headers().get('stripe-signature')
