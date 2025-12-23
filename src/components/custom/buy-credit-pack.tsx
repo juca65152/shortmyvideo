@@ -9,7 +9,7 @@
     setIsLoading(true)
     setError("")
 
-    try {
+try {
   analytics.trackEvent({
     name: 'purchase_attempt',
     properties: { credits, currency, totalPrice }
@@ -18,10 +18,7 @@
   const res = await fetch('/api/stripe/checkout', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      credits,
-      currency
-    })
+    body: JSON.stringify({ credits, currency })
   })
 
   if (!res.ok) {
@@ -46,11 +43,3 @@
 } finally {
   setIsLoading(false)
 }
-    } catch (err) {
-      setError("Purchase failed. Please try again.")
-      console.error("Purchase error:", err)
-      analytics.trackError(err as Error, { context: 'handlePurchase', credits, currency })
-    } finally {
-      setIsLoading(false)
-    }
-  }
