@@ -153,7 +153,7 @@ export default function PricingPage() {
 
                   {/* Icon */}
                   <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${plan.color} flex items-center justify-center mb-6`}>
-                    <Icon className="w-7 h-7 text-white" />
+                    {Icon && <Icon className="w-7 h-7 text-white" />}
                   </div>
 
                   {/* Plan Name */}
