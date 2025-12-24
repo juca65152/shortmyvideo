@@ -5,8 +5,10 @@ import { Card } from "@/components/ui/card"
 import { CheckCircle2, Sparkles, Zap, Crown } from "lucide-react"
 import { useState } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 export default function PricingPage() {
+    const router = useRouter()
   const [billingCycle, setBillingCycle] = useState<"monthly" | "annual">("monthly")
 
   const plans = [
@@ -179,17 +181,14 @@ export default function PricingPage() {
                   </div>
 
                   {/* CTA Button */}
-                  <Button
-                    className={`w-full mb-8 ${
-                      plan.highlighted
-                        ? "bg-gradient-to-r from-[#0066FF] to-[#FF0080] hover:opacity-90 text-white shadow-lg shadow-[#FF0080]/30"
-                        : "bg-gray-900 hover:bg-gray-800 text-white"
-                    }`}
-                    size="lg"
-                  >
-                    {plan.cta}
-                  </Button>
-
+                 <Button
+  className="w-full mt-6"
+  onClick={() => {
+    router.push("/extra-credits")
+  }}
+>
+  Comprar
+</Button>
                   {/* Features */}
                   <div className="space-y-4">
                     {plan.features.map((feature, featureIdx) => (
