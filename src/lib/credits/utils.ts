@@ -139,16 +139,12 @@ export function isLowBalance(
   const threshold = maxMonthlyCredits * CREDIT_RULES.LOW_BALANCE_THRESHOLD
   return currentCredits < threshold
 }
-
 /**
  * Format credits for display
  */
 export function formatCredits(credits?: number): string {
   return Number(credits ?? 0).toLocaleString()
 }
-  return credits.toLocaleString()
-}
-
 /**
  * Get estimated shorts count from credits
  */
