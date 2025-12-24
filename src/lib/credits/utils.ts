@@ -143,7 +143,9 @@ export function isLowBalance(
 /**
  * Format credits for display
  */
-export function formatCredits(credits: number): string {
+export function formatCredits(credits?: number): string {
+  return Number(credits ?? 0).toLocaleString()
+}
   return credits.toLocaleString()
 }
 
