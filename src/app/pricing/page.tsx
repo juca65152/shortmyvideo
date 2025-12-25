@@ -159,7 +159,6 @@ export default function PricingPage() {
                   <span className="text-4xl font-bold">${price}</span>
                   {price > 0 && <span className="text-gray-600"> / mo</span>}
                 </div>
-
                 <Button
   className="w-full mt-6"
   onClick={() => {
@@ -168,8 +167,6 @@ export default function PricingPage() {
 >
   {plan.name === "Free" ? "Start Free" : "Assinar plano"}
 </Button>
-
-
                 <div className="space-y-3">
                   {plan.features.map(feature => (
                     <div key={feature} className="flex gap-2 text-sm">
