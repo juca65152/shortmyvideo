@@ -161,11 +161,14 @@ export default function PricingPage() {
                 </div>
 
                 <Button
-                  className="w-full mb-6"
-                  onClick={() => router.push("/extra-credits")}
-                >
-                  Comprar
-                </Button>
+  className="w-full mt-6"
+  onClick={() => {
+    router.push(getCheckoutRoute(plan.name))
+  }}
+>
+  {plan.name === "Free" ? "Start Free" : "Assinar plano"}
+</Button>
+
 
                 <div className="space-y-3">
                   {plan.features.map(feature => (
