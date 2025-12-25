@@ -159,13 +159,13 @@ export default function PricingPage() {
                   <span className="text-4xl font-bold">${price}</span>
                   {price > 0 && <span className="text-gray-600"> / mo</span>}
                 </div>
-                <Button
+<Button
   className="w-full mt-6"
   onClick={() => {
-    router.push(getCheckoutRoute(plan.name))
+    router.push(`/api/stripe/checkout?plan=${plan.name}&billing=${billingCycle}`)
   }}
 >
-  {plan.name === "Free" ? "Start Free" : "Assinar plano"}
+  Comprar
 </Button>
                 <div className="space-y-3">
                   {plan.features.map(feature => (
