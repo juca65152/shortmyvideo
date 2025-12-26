@@ -7,17 +7,11 @@ const handlePurchase = async () => {
       name: "purchase_attempt",
       properties: { credits, currency, totalPrice }
     })
-
     const res = await fetch("/api/stripe/credits", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        credits,
-        currency,
-        type: "extra_credits"
-      })
-    })
-
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ credits, currency })
+})
     if (!res.ok) {
       throw new Error("Failed to create checkout session")
     }
