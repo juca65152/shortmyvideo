@@ -161,8 +161,30 @@ export default function PricingPage() {
                 </div>
 <Button
   className="w-full mt-6"
-  onClick={() => {
-    router.push(`/api/stripe/checkout?plan=${plan.name}&billing=${billingCycle}`)
+  onClick={async () => {
+    const res = await fetch("/api/stripe/checkout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        plan:
+          plan.name === "Pro"
+            ? "pro"
+            : plan.name === "Creator+"
+            ? "creator"
+            : null,
+        billingCycle,
+      }),
+    })
+
+    const data = await res.json()
+
+    if (data.url) {
+      window.location.href = data.url
+    } else {
+      alert("Erro ao iniciar pagamento")
+    }
   }}
 >
   Comprar
