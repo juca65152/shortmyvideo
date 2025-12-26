@@ -160,14 +160,13 @@ export default function PricingPage() {
                   {price > 0 && <span className="text-gray-600"> / mo</span>}
                 </div>
 <Button
-  className="w-full mt-6"
   onClick={async () => {
     const res = await fetch("/api/stripe/checkout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        plan: plan.name, // "Pro" | "Creator"
-        billing: billingCycle, // "monthly" | "annual"
+        plan: "pro",
+        billing: "monthly",
       }),
     })
 
@@ -175,8 +174,6 @@ export default function PricingPage() {
 
     if (data.url) {
       window.location.href = data.url
-    } else {
-      alert("Erro ao iniciar pagamento")
     }
   }}
 >
