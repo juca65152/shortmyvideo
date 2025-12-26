@@ -15,16 +15,30 @@ function getStripe() {
     apiVersion: "2024-06-20",
   })
 }
-
 export async function POST(req: Request) {
   try {
     const stripe = getStripe()
+    const { plan, billing } = await req.json()
 
-    const { priceId } = await req.json()
+    if (!plan || !billing) {
+      return NextResponse.json(
+        { error: "Missing plan or billing" },
+        { status: 400 }
+      )
+    }
+
+    const PRICE_MAP: Record<string, string | undefined> = {
+      "Pro_monthly": process.env.STRIPE_PRICE_PRO_MONTHLY,
+      "Pro_annual": process.env.STRIPE_PRICE_PRO_ANNUAL,
+      "Creator_monthly": process.env.STRIPE_PRICE_CREATOR_MONTHLY,
+      "Creator_annual": process.env.STRIPE_PRICE_CREATOR_ANNUAL,
+    }
+
+    const priceId = PRICE_MAP[`${plan}_${billing}`]
 
     if (!priceId) {
       return NextResponse.json(
-        { error: "Missing priceId" },
+        { error: "Invalid plan or billing" },
         { status: 400 }
       )
     }
