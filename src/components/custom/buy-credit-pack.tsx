@@ -8,7 +8,7 @@ const handlePurchase = async () => {
       properties: { credits, currency, totalPrice }
     })
 
-    const res = await fetch("/api/stripe/checkout", {
+    const res = await fetch("/api/stripe/credits", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ credits, currency })
