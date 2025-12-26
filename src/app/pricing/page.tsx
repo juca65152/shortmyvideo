@@ -161,7 +161,7 @@ export default function PricingPage() {
                 </div>
 <Button
   onClick={async () => {
-    const res = await fetch("/api/stripe/checkout", {
+    const res = await fetch("/api/stripe/checkout/subscription", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
