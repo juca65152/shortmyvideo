@@ -164,17 +164,10 @@ export default function PricingPage() {
   onClick={async () => {
     const res = await fetch("/api/stripe/checkout", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        plan:
-          plan.name === "Pro"
-            ? "pro"
-            : plan.name === "Creator+"
-            ? "creator"
-            : null,
-        billingCycle,
+        plan: plan.name, // "Pro" | "Creator"
+        billing: billingCycle, // "monthly" | "annual"
       }),
     })
 
