@@ -1,0 +1,15 @@
+"use client"
+
+export default function Home() {
+  async function subscribe() {
+    const res = await fetch("/api/stripe/checkout", { method: "POST" })
+    const data = await res.json()
+    window.location.href = data.url
+  }
+
+  return (
+    <button onClick={subscribe}>
+      Assinar agora
+    </button>
+  )
+}
